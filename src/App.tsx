@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { copy, flavors } from './content'
+import { copy, flavors, menu } from './content'
 import { scroll } from './store'
 import Loader from './components/Loader'
 import Cursor from './components/Cursor'
@@ -16,6 +16,7 @@ const Experience = lazy(() => import('./three/Experience'))
 export default function App() {
   const [ready, setReady] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const lenisRef = useRef<Lenis | null>(null)
 
   // wait for fonts (the can label is painted with them) and a minimum beat for the loader
@@ -65,24 +66,46 @@ export default function App() {
       )}
 
       <nav className="nav">
-        <a href="#top" className="nav-logo" data-hover>
+        <a href="#home" className="nav-logo" data-hover>
           <Bolt /> {copy.brand}
         </a>
         <div className="nav-links">
-          {['Flavors', 'Science', 'Story'].map((l) => (
-            <a key={l} href={`#${l.toLowerCase()}`} className="scramble" data-text={l}>
-              {l}
+          {menu.map((m, i) => (
+            <a key={m.id} href={`#${m.id}`} className="nav-link" data-section={m.id}>
+              <sup>0{i + 1}</sup>
+              <span className="scramble" data-text={m.label}>
+                {m.label}
+              </span>
             </a>
           ))}
         </div>
-        <a href="#shop" className="btn btn-small" data-magnetic>
+        <a href="#shop" className="btn btn-small nav-cta" data-magnetic>
           {copy.cta}
         </a>
+        <button
+          className={`burger ${menuOpen ? 'is-open' : ''}`}
+          aria-label="Menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          <span />
+          <span />
+        </button>
       </nav>
 
+      <div className={`mobile-menu ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
+        {menu.map((m, i) => (
+          <a key={m.id} href={`#${m.id}`} onClick={() => setMenuOpen(false)} style={{ ['--i' as string]: i }}>
+            <sup>0{i + 1}</sup>
+            {m.label}
+          </a>
+        ))}
+      </div>
+
       <main>
-        <section className="hero" id="top">
+        <section className="hero" id="home">
           <div className="hero-glow" />
+          <p className="section-tag"><span>01</span> Home</p>
           <p className="hero-kicker reveal-up">
             <Bolt /> {copy.heroKicker}
           </p>
@@ -123,6 +146,7 @@ export default function App() {
         </section>
 
         <section className="overview" id="science">
+          <p className="section-tag"><span>02</span> Science</p>
           <div className="header-1">
             <h2>{copy.header1}</h2>
           </div>
@@ -151,13 +175,13 @@ export default function App() {
         </section>
 
         <section className="manifesto" id="story">
-          <p className="eyebrow">
-            <Bolt /> The Story
-          </p>
+          <p className="section-tag"><span>03</span> Story</p>
           <p className="manifesto-text">{copy.manifesto}</p>
         </section>
 
-        <section className="stats">
+        <section className="stats" id="facts">
+          <p className="section-tag"><span>04</span> Facts</p>
+          <h2 className="stats-title">{copy.factsTitle}</h2>
           {copy.stats.map((s) => (
             <div className="stat" key={s.label}>
               <div className="stat-value">
@@ -174,6 +198,7 @@ export default function App() {
 
         <section className="flavors" id="flavors">
           <div className="flavor-bg" />
+          <p className="section-tag"><span>05</span> Flavors</p>
           <div className="flavor-counter">
             <span className="flavor-index">01</span> / 0{flavors.length}
           </div>
@@ -193,6 +218,7 @@ export default function App() {
         </section>
 
         <section className="outro" id="shop">
+          <p className="section-tag"><span>06</span> Shop</p>
           <p className="outro-kicker">{copy.outroKicker}</p>
           <h2 className="outro-title">
             {copy.outro.split('').map((c, i) => (
@@ -208,6 +234,13 @@ export default function App() {
 
         <footer className="footer">
           <div className="footer-big">{copy.brand}</div>
+          <div className="footer-menu">
+            {menu.map((m) => (
+              <a key={m.id} href={`#${m.id}`}>
+                {m.label}
+              </a>
+            ))}
+          </div>
           <div className="footer-row">
             <span>© {new Date().getFullYear()} DILLD Brine Co.</span>
             <span>Stay salty.</span>

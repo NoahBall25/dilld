@@ -49,6 +49,16 @@ export const flavors: Flavor[] = [
   },
 ]
 
+// The menu order matches the section order on the page, top to bottom.
+export const menu = [
+  { id: 'home', label: 'Home' },
+  { id: 'science', label: 'Science' },
+  { id: 'story', label: 'Story' },
+  { id: 'facts', label: 'Facts' },
+  { id: 'flavors', label: 'Flavors' },
+  { id: 'shop', label: 'Shop' },
+]
+
 export const copy = {
   brand: 'DILLD',
   heroKicker: 'Pickle-powered energy',
@@ -75,6 +85,7 @@ export const copy = {
     { value: 150, suffix: 'mg', label: 'Natural caffeine per can' },
     { value: 100, suffix: '%', label: 'Real cold-cured dill brine' },
   ],
+  factsTitle: 'Brine Facts',
   outroKicker: "Don't just hydrate —",
   outro: 'Dill Up',
   cta: 'Grab a can',

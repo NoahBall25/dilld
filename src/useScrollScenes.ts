@@ -2,7 +2,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useGSAP } from '@gsap/react'
-import { flavors } from './content'
+import { flavors, menu } from './content'
 import { can, scroll } from './store'
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP)
@@ -178,11 +178,7 @@ export function useScrollScenes(loaded: boolean) {
           scrollTrigger: { trigger: '.manifesto', start: 'top 65%', end: 'bottom 70%', scrub: true },
         },
       )
-      gsap.from('.manifesto .eyebrow', {
-        x: -60,
-        autoAlpha: 0,
-        scrollTrigger: { trigger: '.manifesto', start: 'top 75%', toggleActions: 'play none none reverse' },
-      })
+
       ScrollTrigger.create({
         trigger: '.manifesto',
         start: 'top bottom',
@@ -333,6 +329,30 @@ export function useScrollScenes(loaded: boolean) {
         ease: 'expo.out',
         duration: 1.2,
         scrollTrigger: { trigger: '.footer', start: 'top 70%', toggleActions: 'play none none reverse' },
+      })
+
+      /* ───────── menu ↔ sections: tags slide in, active link follows scroll ───────── */
+      gsap.utils.toArray<HTMLElement>('.section-tag').forEach((tag) => {
+        gsap.from(tag, {
+          x: -40,
+          autoAlpha: 0,
+          duration: 0.8,
+          ease: 'expo.out',
+          scrollTrigger: { trigger: tag.closest('section'), start: 'top 75%', toggleActions: 'play none none reverse' },
+        })
+      })
+      const links = gsap.utils.toArray<HTMLElement>('.nav-link')
+      const ids = menu.map((m) => m.id)
+      ids.forEach((id, i) => {
+        ScrollTrigger.create({
+          trigger: `#${id}`,
+          start: 'top center',
+          endTrigger: i < ids.length - 1 ? `#${ids[i + 1]}` : '.footer',
+          end: 'top center',
+          onToggle: (self) => {
+            if (self.isActive) links.forEach((l) => l.classList.toggle('is-active', l.dataset.section === id))
+          },
+        })
       })
 
       /* ───────── nav: text scramble on hover ───────── */
