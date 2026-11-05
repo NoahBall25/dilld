@@ -2,31 +2,57 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { copy, flavors, menu } from './content'
+import { copy, flavors, menu, tag } from './content'
 import { scroll } from './store'
+import { brand, loadBrand, LOGO_URL } from './brand'
 import Loader from './components/Loader'
 import Cursor from './components/Cursor'
 import { Bolt } from './components/Bolt'
+import Countdown from './components/Countdown'
 import { useScrollScenes } from './useScrollScenes'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const Experience = lazy(() => import('./three/Experience'))
 
+function SectionTag({ id }: { id: string }) {
+  const t = tag(id)
+  return (
+    <p className="section-tag">
+      <span>{t.num}</span> {t.label}
+    </p>
+  )
+}
+
+function Logo({ className }: { className?: string }) {
+  const [hasLogo, setHasLogo] = useState(!!brand.logo)
+  useEffect(() => {
+    loadBrand().then(() => setHasLogo(!!brand.logo))
+  }, [])
+  return hasLogo ? (
+    <img src={LOGO_URL} alt={copy.brand} className={`logo-img ${className ?? ''}`} />
+  ) : (
+    <span className={className}>
+      <Bolt /> {copy.brand}
+    </span>
+  )
+}
+
 export default function App() {
   const [ready, setReady] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [joined, setJoined] = useState(false)
   const lenisRef = useRef<Lenis | null>(null)
 
-  // wait for fonts (the can label is painted with them) and a minimum beat for the loader
+  // wait for fonts + logo (the can label is painted with them) and a minimum beat for the loader
   useEffect(() => {
     const fonts = Promise.all([
       document.fonts.load('400 100px Anton'),
       document.fonts.load('500 30px "Space Grotesk"'),
     ]).catch(() => undefined)
     const beat = new Promise((r) => setTimeout(r, 1800))
-    Promise.all([fonts, beat]).then(() => setReady(true))
+    Promise.all([fonts, loadBrand(), beat]).then(() => setReady(true))
   }, [])
 
   useEffect(() => {
@@ -67,7 +93,7 @@ export default function App() {
 
       <nav className="nav">
         <a href="#home" className="nav-logo" data-hover>
-          <Bolt /> {copy.brand}
+          <Logo />
         </a>
         <div className="nav-links">
           {menu.map((m, i) => (
@@ -103,50 +129,53 @@ export default function App() {
       </div>
 
       <main>
-        <section className="hero" id="home">
-          <div className="hero-glow" />
-          <p className="section-tag"><span>01</span> Home</p>
-          <p className="hero-kicker reveal-up">
-            <Bolt /> {copy.heroKicker}
-          </p>
-          <h1 className="hero-title" aria-label={copy.brand}>
-            {copy.brand.split('').map((c, i) => (
-              <span className="hero-char-mask" key={i}>
-                <span className="hero-char" data-hover>
-                  {c}
-                </span>
-              </span>
-            ))}
-          </h1>
-          <div className="hero-bottom">
-            <p className="hero-sub reveal-up">{copy.heroSub}</p>
-            <div className="scroll-cue reveal-up">
-              <span>Scroll to crack one open</span>
-              <span className="scroll-line" />
-            </div>
-          </div>
-        </section>
-
-        <section className="marquee-wrap" aria-hidden>
-          {[0, 1].map((row) => (
-            <div className={`marquee marquee-${row}`} key={row}>
-              <div className="marquee-track">
-                {[...copy.marquee, ...copy.marquee, ...copy.marquee].map((w, i) => (
-                  <span key={i}>
-                    {w} <Bolt />
+        {/* 01 Home: hero, marquee and the intro line belong together */}
+        <div id="home">
+          <section className="hero">
+            <div className="hero-glow" />
+            <SectionTag id="home" />
+            <p className="hero-kicker reveal-up">
+              <Bolt /> {copy.heroKicker}
+            </p>
+            <h1 className="hero-title" aria-label={copy.brand}>
+              {copy.brand.split('').map((c, i) => (
+                <span className="hero-char-mask" key={i}>
+                  <span className="hero-char" data-hover>
+                    {c}
                   </span>
-                ))}
+                </span>
+              ))}
+            </h1>
+            <div className="hero-bottom">
+              <p className="hero-sub reveal-up">{copy.heroSub}</p>
+              <div className="scroll-cue reveal-up">
+                <span>Scroll to crack one open</span>
+                <span className="scroll-line" />
               </div>
             </div>
-          ))}
-        </section>
+          </section>
 
-        <section className="intro">
-          <h2 className="intro-line">{copy.intro}</h2>
-        </section>
+          <section className="marquee-wrap" aria-hidden>
+            {[0, 1].map((row) => (
+              <div className={`marquee marquee-${row}`} key={row}>
+                <div className="marquee-track">
+                  {[...copy.marquee, ...copy.marquee, ...copy.marquee].map((w, i) => (
+                    <span key={i}>
+                      {w} <Bolt />
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+
+          <section className="intro">
+            <h2 className="intro-line">{copy.intro}</h2>
+          </section>
+        </div>
 
         <section className="overview" id="science">
-          <p className="section-tag"><span>02</span> Science</p>
+          <SectionTag id="science" />
           <div className="header-1">
             <h2>{copy.header1}</h2>
           </div>
@@ -175,12 +204,13 @@ export default function App() {
         </section>
 
         <section className="manifesto" id="story">
-          <p className="section-tag"><span>03</span> Story</p>
+          <SectionTag id="story" />
+          <h2 className="story-title">{copy.storyTitle}</h2>
           <p className="manifesto-text">{copy.manifesto}</p>
         </section>
 
         <section className="stats" id="facts">
-          <p className="section-tag"><span>04</span> Facts</p>
+          <SectionTag id="facts" />
           <h2 className="stats-title">{copy.factsTitle}</h2>
           {copy.stats.map((s) => (
             <div className="stat" key={s.label}>
@@ -196,19 +226,27 @@ export default function App() {
           ))}
         </section>
 
-        <section className="flavors" id="flavors">
+        <section className="flavors" id="shop">
           <div className="flavor-bg" />
-          <p className="section-tag"><span>05</span> Flavors</p>
+          <SectionTag id="shop" />
           <div className="flavor-counter">
             <span className="flavor-index">01</span> / 0{flavors.length}
           </div>
           <div className="flavor-track">
             {flavors.map((f, i) => (
               <article className="flavor" key={f.name} style={{ ['--accent' as string]: f.accent, ['--ink' as string]: f.ink }}>
-                <span className="flavor-num">0{i + 1}</span>
+                <span className="flavor-num">
+                  0{i + 1} · {copy.shopTitle}
+                </span>
                 <h3 className="flavor-name">{f.name}</h3>
                 <p className="flavor-tag">{f.tagline}</p>
                 <p className="flavor-notes">{f.notes}</p>
+                <div className="flavor-buy">
+                  <span className="flavor-price">{f.price}</span>
+                  <button className="btn btn-buy" data-magnetic>
+                    Add to cart <Bolt />
+                  </button>
+                </div>
               </article>
             ))}
           </div>
@@ -217,34 +255,90 @@ export default function App() {
           </div>
         </section>
 
-        <section className="outro" id="shop">
-          <p className="section-tag"><span>06</span> Shop</p>
-          <p className="outro-kicker">{copy.outroKicker}</p>
-          <h2 className="outro-title">
-            {copy.outro.split('').map((c, i) => (
-              <span className="outro-char" key={i}>
-                {c === ' ' ? ' ' : c}
-              </span>
-            ))}
-          </h2>
-          <a href="#shop" className="btn btn-big" data-magnetic>
-            <span>{copy.cta}</span> <Bolt />
-          </a>
+        <section className="drop" id="drop">
+          <SectionTag id="drop" />
+          <div className="drop-inner">
+            <p className="drop-kicker">
+              <Bolt /> {copy.dropKicker}
+            </p>
+            <h2 className="drop-title">{copy.dropTitle}</h2>
+            <p className="drop-body">{copy.dropBody}</p>
+            <Countdown />
+            <form
+              className={`drop-form ${joined ? 'is-joined' : ''}`}
+              onSubmit={(e) => {
+                e.preventDefault()
+                setJoined(true)
+              }}
+            >
+              {joined ? (
+                <p className="drop-thanks">{copy.dropThanks}</p>
+              ) : (
+                <>
+                  <input type="email" required placeholder="you@email.com" aria-label="Email" />
+                  <button className="btn" type="submit" data-magnetic>
+                    {copy.dropCta}
+                  </button>
+                </>
+              )}
+            </form>
+          </div>
+        </section>
+
+        <section className="tiktok" id="tiktok">
+          <SectionTag id="tiktok" />
+          <h2 className="tiktok-title">{copy.tiktokTitle}</h2>
+          <div className="tiktok-row">
+            {copy.tiktok.map((v) => {
+              const f = flavors[v.flavor]
+              return (
+                <article
+                  className="tt-card"
+                  key={v.caption}
+                  data-hover
+                  style={{ ['--bg' as string]: f.bg, ['--accent' as string]: f.accent }}
+                >
+                  <div className="tt-glow" />
+                  <div className="tt-play">▶</div>
+                  <div className="tt-meta">
+                    <span className="tt-handle">{copy.tiktokHandle}</span>
+                    <p>{v.caption}</p>
+                    <span className="tt-views">♥ {v.views}</span>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
         </section>
 
         <footer className="footer">
-          <div className="footer-big">{copy.brand}</div>
-          <div className="footer-menu">
-            {menu.map((m) => (
-              <a key={m.id} href={`#${m.id}`}>
-                {m.label}
-              </a>
-            ))}
+          <div className="outro">
+            <p className="outro-kicker">{copy.outroKicker}</p>
+            <h2 className="outro-title">
+              {copy.outro.split('').map((c, i) => (
+                <span className="outro-char" key={i}>
+                  {c === ' ' ? ' ' : c}
+                </span>
+              ))}
+            </h2>
+            <a href="#shop" className="btn btn-big" data-magnetic>
+              <span>{copy.cta}</span> <Bolt />
+            </a>
           </div>
-          <div className="footer-row">
-            <span>© {new Date().getFullYear()} DILLD Brine Co.</span>
-            <span>Stay salty.</span>
-            <span>Instagram · TikTok · X</span>
+          <div className="footer-end">
+            <div className="footer-big">{copy.brand}</div>
+            <div className="footer-menu">
+              {menu.map((m) => (
+                <a key={m.id} href={`#${m.id}`}>
+                  {m.label}
+                </a>
+              ))}
+            </div>
+            <div className="footer-row">
+              <span>© {new Date().getFullYear()} DILL'D Brine Co.</span>
+              <span>Stay salty.</span>
+              <span>Instagram · TikTok · X</span>
+            </div>
           </div>
         </footer>
       </main>

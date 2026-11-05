@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import type { Flavor } from '../content'
+import { brand } from '../brand'
 
 const W = 2048
 const H = 1024
@@ -68,26 +69,37 @@ export function makeLabel(flavor: Flavor): THREE.CanvasTexture {
   g.fillStyle = halo
   g.fillRect(cx - 600, 80, 1200, H - 180)
 
-  // logo
+  // logo: the Stitch artwork if it's been dropped in, otherwise the wordmark
+  if (brand.logo) {
+    const img = brand.logo
+    const h = 470
+    const w = (img.width / img.height) * h
+    g.save()
+    g.shadowColor = 'rgba(0,0,0,.45)'
+    g.shadowBlur = 30
+    g.drawImage(img, cx - w / 2, H * 0.47 - h * 0.62, w, h)
+    g.restore()
+  } else {
+    g.textAlign = 'center'
+    g.font = '400 300px Anton, Impact, sans-serif'
+    g.lineJoin = 'round'
+    g.lineWidth = 26
+    g.strokeStyle = '#0b1a0f'
+    g.strokeText("DILL'D", cx, H * 0.47)
+    g.fillStyle = '#f3efe0'
+    g.fillText("DILL'D", cx, H * 0.47)
+
+    g.save()
+    g.translate(cx + 340, H * 0.2)
+    g.scale(4.2, 4.2)
+    g.fillStyle = flavor.accent
+    g.strokeStyle = '#0b1a0f'
+    g.lineWidth = 3
+    bolt(g)
+    g.restore()
+  }
+
   g.textAlign = 'center'
-  g.font = '400 330px Anton, Impact, sans-serif'
-  g.lineJoin = 'round'
-  g.lineWidth = 26
-  g.strokeStyle = '#0b1a0f'
-  g.strokeText('DILLD', cx, H * 0.47)
-  g.fillStyle = '#f3efe0'
-  g.fillText('DILLD', cx, H * 0.47)
-
-  // bolt through the logo
-  g.save()
-  g.translate(cx + 300, H * 0.22)
-  g.scale(4.2, 4.2)
-  g.fillStyle = flavor.accent
-  g.strokeStyle = '#0b1a0f'
-  g.lineWidth = 3
-  bolt(g)
-  g.restore()
-
   // flavor pill
   g.font = '400 64px Anton, Impact, sans-serif'
   const label = flavor.name.toUpperCase()

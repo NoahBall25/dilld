@@ -1,6 +1,10 @@
-# ⚡ DILLD — Pickle-Powered Energy
+# ⚡ DILL'D — Pickle-Powered Energy
 
-Interactive 3D landing page for DILLD brine energy drinks. Built with React, TypeScript, React Three Fiber, GSAP and Lenis.
+Interactive 3D one-page site for DILL'D brine energy drinks. The menu has 7 items (Home, Science, Story, Facts, Shop, Drop, TikTok), and each one matches a labeled section on the page, in the same order.
+
+Drop the logo exported from Google Stitch at `public/brand/logo.png` and it shows up in the nav and on the 3D can label.
+
+Built with React, TypeScript, React Three Fiber, GSAP and Lenis.
 
 ## Features
 

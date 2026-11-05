@@ -64,10 +64,11 @@ export function useScrollScenes(loaded: boolean) {
         },
       })
 
+      const mid = (document.querySelectorAll('.hero-char-mask').length - 1) / 2
       gsap.to('.hero-char-mask', {
-        x: (i) => (i - 2) * window.innerWidth * 0.14,
+        x: (i) => (i - mid) * window.innerWidth * 0.13,
         y: (i) => (i % 2 ? -1 : 1) * 120,
-        rotate: (i) => (i - 2) * 9,
+        rotate: (i) => (i - mid) * 9,
         ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
       })
@@ -179,6 +180,16 @@ export function useScrollScenes(loaded: boolean) {
         },
       )
 
+      const storyTitle = SplitText.create('.story-title', { type: 'lines', mask: 'lines' })
+      gsap.from(storyTitle.lines, {
+        yPercent: 110,
+        rotate: 3,
+        stagger: 0.12,
+        duration: 1.1,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: '.story-title', start: 'top 80%', toggleActions: 'play none none reverse' },
+      })
+
       ScrollTrigger.create({
         trigger: '.manifesto',
         start: 'top bottom',
@@ -263,7 +274,7 @@ export function useScrollScenes(loaded: boolean) {
       gsap.utils.toArray<HTMLElement>('.flavor').forEach((panel) => {
         const st = { containerAnimation: fl, trigger: panel, start: 'left 80%', end: 'left 10%', scrub: true }
         gsap.from(panel.querySelector('.flavor-name'), { xPercent: 60, skewX: -20, autoAlpha: 0, ease: 'power2.out', scrollTrigger: st })
-        gsap.from(panel.querySelectorAll('.flavor-tag, .flavor-notes, .flavor-num'), {
+        gsap.from(panel.querySelectorAll('.flavor-tag, .flavor-notes, .flavor-num, .flavor-buy'), {
           y: 60,
           autoAlpha: 0,
           stagger: 0.1,
@@ -272,7 +283,86 @@ export function useScrollScenes(loaded: boolean) {
         })
       })
 
-      /* ───────── outro: circle wipe, giant letters, can centers ───────── */
+      // spin where the shop run leaves the can (front facing, last flavor)
+      const SP = 4 * PI + (n - 1) * 2 * PI
+
+      /* ───────── mystery drop: can swings right, countdown slams in ───────── */
+      ScrollTrigger.create({
+        trigger: '.drop',
+        start: 'top bottom',
+        end: 'top top',
+        onUpdate: ({ progress: p }) => {
+          const k = ease(p)
+          can.x = lerp(mobile() ? 0 : -SIDE, SIDE, k)
+          can.y = mobile() ? lerp(0.85, 1.15, k) : 0
+          can.scale = mobile() ? lerp(0.95, 0.7, k) : 1
+          can.spin = SP + k * 2 * PI
+          can.tilt = lerp(0.12, -0.15, k)
+          can.glow = pulse(p, 0.9, 0.12)
+        },
+      })
+      const dropTitle = SplitText.create('.drop-title', { type: 'words,chars', mask: 'chars' })
+      gsap
+        .timeline({ scrollTrigger: { trigger: '.drop', start: 'top 55%', toggleActions: 'play none none reverse' } })
+        .from('.drop-kicker', { x: -40, autoAlpha: 0, duration: 0.6, ease: 'expo.out' })
+        .from(dropTitle.chars, { yPercent: 110, stagger: 0.015, duration: 0.9, ease: 'expo.out' }, 0.1)
+        .from('.drop-body', { y: 30, autoAlpha: 0, duration: 0.8, ease: 'power3.out' }, 0.4)
+        .from('.cd-cell', { y: 80, rotateX: -90, autoAlpha: 0, stagger: 0.08, duration: 0.9, ease: 'back.out(1.8)' }, 0.5)
+        .from('.drop-form', { y: 30, autoAlpha: 0, duration: 0.8, ease: 'power3.out' }, 0.8)
+
+      /* ───────── tiktok: can lifts away, cards fly in ───────── */
+      ScrollTrigger.create({
+        trigger: '.tiktok',
+        start: 'top bottom',
+        end: 'top top',
+        onUpdate: ({ progress: p }) => {
+          const k = gsap.parseEase('power2.in')(p)
+          can.x = lerp(SIDE, mobile() ? 0 : SIDE * 0.6, k)
+          can.y = lerp(mobile() ? 1.15 : 0, 3, k)
+          can.scale = lerp(mobile() ? 0.7 : 1, 0.8, k)
+          can.spin = SP + 2 * PI + k * PI
+          can.tilt = lerp(-0.15, 0.3, k)
+          can.glow = k * 0.5
+        },
+      })
+      const ttTitle = SplitText.create('.tiktok-title', { type: 'words', mask: 'words' })
+      gsap.from(ttTitle.words, {
+        yPercent: 110,
+        stagger: 0.06,
+        duration: 1,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: '.tiktok', start: 'top 70%', toggleActions: 'play none none reverse' },
+      })
+      gsap.from('.tt-card', {
+        y: () => window.innerHeight * 0.6,
+        rotate: (i) => (i % 2 ? 14 : -14),
+        rotateY: (i) => (i % 2 ? -40 : 40),
+        scale: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.tiktok', start: 'top 85%', end: 'top 15%', scrub: 1 },
+      })
+      gsap.to('.tiktok-row', {
+        xPercent: () => (mobile() ? 0 : -8),
+        ease: 'none',
+        scrollTrigger: { trigger: '.tiktok', start: 'top bottom', end: 'bottom top', scrub: true },
+      })
+      // 3D tilt toward the pointer
+      gsap.utils.toArray<HTMLElement>('.tt-card').forEach((card) => {
+        const rx = gsap.quickTo(card, 'rotateX', { duration: 0.5, ease: 'power3.out' })
+        const ry = gsap.quickTo(card, 'rotateY', { duration: 0.5, ease: 'power3.out' })
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect()
+          ry(((e.clientX - r.left) / r.width - 0.5) * 24)
+          rx(-((e.clientY - r.top) / r.height - 0.5) * 24)
+        })
+        card.addEventListener('pointerleave', () => {
+          rx(0)
+          ry(0)
+        })
+      })
+
+      /* ───────── outro (top of footer): circle wipe, giant letters, can drops back in ───────── */
       gsap.fromTo(
         '.outro',
         { clipPath: 'circle(0% at 50% 100%)' },
@@ -298,18 +388,18 @@ export function useScrollScenes(loaded: boolean) {
         end: 'top top',
         onUpdate: ({ progress: p }) => {
           const k = ease(p)
-          can.x = lerp(mobile() ? 0 : -SIDE, 0, k)
-          can.y = lerp(mobile() ? 0.85 : 0, -0.15, k)
-          can.scale = lerp(1.05, 1.25, k)
-          can.spin = 4 * PI + (n - 1) * 2 * PI + k * 2 * PI
-          can.tilt = lerp(0.12, 0, k)
-          can.glow = pulse(p, 0.85, 0.15)
+          can.x = lerp(mobile() ? 0 : SIDE * 0.6, 0, k)
+          can.y = lerp(3, -0.15, k)
+          can.scale = lerp(0.8, 1.25, k)
+          can.spin = SP + 3 * PI + k * PI
+          can.tilt = lerp(0.3, 0, k)
+          can.glow = Math.max(0.5 * (1 - k), pulse(p, 0.85, 0.15))
         },
       })
 
       /* ───────── footer: can blasts off ───────── */
       ScrollTrigger.create({
-        trigger: '.footer',
+        trigger: '.footer-end',
         start: 'top bottom',
         end: 'bottom bottom',
         onUpdate: ({ progress: p }) => {
@@ -317,7 +407,7 @@ export function useScrollScenes(loaded: boolean) {
           can.x = 0
           can.y = lerp(-0.15, 4, k)
           can.scale = lerp(1.25, 0.8, k)
-          can.spin = 4 * PI + n * 2 * PI + k * 3 * PI
+          can.spin = SP + 4 * PI + k * 3 * PI
           can.tilt = lerp(0, -0.4, k)
           can.glow = k
         },
@@ -328,7 +418,7 @@ export function useScrollScenes(loaded: boolean) {
         stagger: 0.06,
         ease: 'expo.out',
         duration: 1.2,
-        scrollTrigger: { trigger: '.footer', start: 'top 70%', toggleActions: 'play none none reverse' },
+        scrollTrigger: { trigger: '.footer-end', start: 'top 70%', toggleActions: 'play none none reverse' },
       })
 
       /* ───────── menu ↔ sections: tags slide in, active link follows scroll ───────── */
@@ -338,7 +428,7 @@ export function useScrollScenes(loaded: boolean) {
           autoAlpha: 0,
           duration: 0.8,
           ease: 'expo.out',
-          scrollTrigger: { trigger: tag.closest('section'), start: 'top 75%', toggleActions: 'play none none reverse' },
+          scrollTrigger: { trigger: tag.closest('section, #home'), start: 'top 75%', toggleActions: 'play none none reverse' },
         })
       })
       const links = gsap.utils.toArray<HTMLElement>('.nav-link')
