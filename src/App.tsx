@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { copy, flavors, menu, tag } from './content'
+import { copy, flavors, footerLinks, menu, tag } from './content'
 import { scroll } from './store'
 import { brand, loadBrand, LOGO_URL } from './brand'
 import Loader from './components/Loader'
@@ -105,6 +105,9 @@ export default function App() {
             </a>
           ))}
         </div>
+        <a href="/blog/" className="nav-blog" data-hover>
+          Blog
+        </a>
         <a href="#shop" className="btn btn-small nav-cta" data-magnetic>
           {copy.cta}
         </a>
@@ -126,6 +129,10 @@ export default function App() {
             {m.label}
           </a>
         ))}
+        <a href="/blog/" style={{ ['--i' as string]: menu.length }}>
+          <sup>→</sup>
+          Blog
+        </a>
       </div>
 
       <main>
@@ -137,17 +144,27 @@ export default function App() {
             <p className="hero-kicker reveal-up">
               <Bolt /> {copy.heroKicker}
             </p>
-            <h1 className="hero-title" aria-label={copy.brand}>
+            <h1 className="hero-title">
+              <span className="sr-only">DILL'D Pickle Energy Drink</span>
               {copy.brand.split('').map((c, i) => (
                 <span className="hero-char-mask" key={i}>
-                  <span className="hero-char" data-hover>
+                  <span className="hero-char" data-hover aria-hidden>
                     {c}
                   </span>
                 </span>
               ))}
             </h1>
             <div className="hero-bottom">
-              <p className="hero-sub reveal-up">{copy.heroSub}</p>
+              <div className="hero-copy">
+                <p className="hero-sub reveal-up">{copy.heroSub}</p>
+                <ul className="hero-badges reveal-up">
+                  {copy.heroBadges.map((b) => (
+                    <li key={b}>
+                      <Bolt /> {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <div className="scroll-cue reveal-up">
                 <span>Scroll to crack one open</span>
                 <span className="scroll-line" />
@@ -235,6 +252,10 @@ export default function App() {
           <div className="flavor-track">
             {flavors.map((f, i) => (
               <article className="flavor" key={f.name} style={{ ['--accent' as string]: f.accent, ['--ink' as string]: f.ink }}>
+                <figure className="flavor-shot">
+                  <img src={f.image} alt={`DILL'D ${f.name} pickle energy drink can`} loading="lazy" width={340} height={560} />
+                  <figcaption>{f.badge}</figcaption>
+                </figure>
                 <span className="flavor-num">
                   0{i + 1} · {copy.shopTitle}
                 </span>
@@ -242,7 +263,9 @@ export default function App() {
                 <p className="flavor-tag">{f.tagline}</p>
                 <p className="flavor-notes">{f.notes}</p>
                 <div className="flavor-buy">
-                  <span className="flavor-price">{f.price}</span>
+                  <span className="flavor-price">
+                    {f.price} <small>355ml / 12 fl oz</small>
+                  </span>
                   <button className="btn btn-buy" data-magnetic>
                     Add to cart <Bolt />
                   </button>
@@ -294,16 +317,18 @@ export default function App() {
               return (
                 <article
                   className="tt-card"
-                  key={v.caption}
+                  key={v.handle}
                   data-hover
                   style={{ ['--bg' as string]: f.bg, ['--accent' as string]: f.accent }}
                 >
+                  <img className="tt-img" src={v.image} alt={`${v.handle} drinking DILL'D ${f.name}`} loading="lazy" />
                   <div className="tt-glow" />
+                  <span className="tt-likes">♥ {v.views}</span>
                   <div className="tt-play">▶</div>
                   <div className="tt-meta">
-                    <span className="tt-handle">{copy.tiktokHandle}</span>
-                    <p>{v.caption}</p>
-                    <span className="tt-views">♥ {v.views}</span>
+                    <span className="tt-handle">{v.handle}</span>
+                    <p>“{v.caption}”</p>
+                    <span className="tt-views">{v.tag}</span>
                   </div>
                 </article>
               )
@@ -327,17 +352,50 @@ export default function App() {
           </div>
           <div className="footer-end">
             <div className="footer-big">{copy.brand}</div>
-            <div className="footer-menu">
-              {menu.map((m) => (
-                <a key={m.id} href={`#${m.id}`}>
-                  {m.label}
-                </a>
-              ))}
+            <div className="footer-grid">
+              <div className="footer-col footer-brand">
+                <img src="/brand/logo-mascot.png" alt="DILL'D mascot logo: May cause extreme dill-ness" width={220} height={220} loading="lazy" />
+                <p>Electrolytes, sour bite and 180mg of pure brine bravado. Quebec born, worldwide shocked.</p>
+              </div>
+              <nav className="footer-col" aria-label="Quick links">
+                <h3>Quick links</h3>
+                {footerLinks.quick.map((l) => (
+                  <a key={l.label} href={l.href}>
+                    {l.label}
+                  </a>
+                ))}
+              </nav>
+              <nav className="footer-col" aria-label="Social">
+                <h3>Drop dispatch</h3>
+                {footerLinks.social.map((l) => (
+                  <a key={l.label} href={l.href} target="_blank" rel="noopener">
+                    {l.label} ↗
+                  </a>
+                ))}
+              </nav>
+              <form className="footer-col footer-news" onSubmit={(e) => e.preventDefault()}>
+                <h3>Global dispatch newsletter</h3>
+                <p>VIP drop alerts, secret codes and sour restock notifications before anyone else.</p>
+                <div>
+                  <input type="email" placeholder="brine_addict@email.com" aria-label="Email for newsletter" required />
+                  <button className="btn btn-small" type="submit">
+                    Join
+                  </button>
+                </div>
+              </form>
             </div>
+            <p className="footer-notice">
+              <strong>Caution / health notice:</strong> {copy.healthNotice} <span>{copy.shipping}</span>
+            </p>
             <div className="footer-row">
-              <span>© {new Date().getFullYear()} DILL'D Brine Co.</span>
-              <span>Stay salty.</span>
-              <span>Instagram · TikTok · X</span>
+              <span>© {new Date().getFullYear()} DILL'D Beverages Inc. All rights reserved.</span>
+              <span className="footer-legal">
+                {footerLinks.legal.map((l) => (
+                  <a key={l.label} href={l.href}>
+                    {l.label}
+                  </a>
+                ))}
+              </span>
             </div>
           </div>
         </footer>

@@ -54,7 +54,7 @@ export function makeLabel(flavor: Flavor): THREE.CanvasTexture {
   g.font = '500 30px "Space Grotesk", sans-serif'
   g.textBaseline = 'middle'
   g.fillStyle = flavor.accent
-  const band = 'PICKLE-POWERED ENERGY  ⚡  REAL DILL BRINE  ⚡  ZERO SUGAR  ⚡  '
+  const band = 'PICKLE-POWERED ENERGY  ⚡  REAL DILL BRINE  ⚡  180MG CAFFEINE  ⚡  '
   tile(g, band, 36)
   g.fillStyle = '#f3efe0'
   g.font = '500 28px "Space Grotesk", sans-serif'

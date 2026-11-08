@@ -1,18 +1,157 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-CA">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="DILL'D — pickle-powered energy. Real dill brine, electrolytes, zero sugar." />
-    <meta name="theme-color" content="#0b1a0f" />
-    <link rel="icon" href="/favicon.svg" />
+    <title>DILL'D Pickle Energy Drink | 180mg Caffeine, Real Dill Brine</title>
+    <meta name="description" content="DILL'D is the pickle energy drink born in Quebec: real fermented dill brine, 180mg caffeine and 4 loud flavours. Shop Classic Dill, Sweet Heat and more." />
+    <meta name="keywords" content="pickle energy drink, DILL'D, dill pickle drink, pickle brine energy drink, Classic Dill, Sweet Heat, Sour Blast, Dill Candy, Quebec energy drink" />
+    <link rel="canonical" href="__SITE_URL__/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0d170a" />
+
+    <meta property="og:site_name" content="DILL'D" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DILL'D Pickle Energy Drink | May Cause Extreme Dill-ness" />
+    <meta property="og:description" content="Real fermented dill brine, 180mg caffeine, zero apologies. Four flavours plus a monthly Mystery Can Drop." />
+    <meta property="og:url" content="__SITE_URL__/" />
+    <meta property="og:image" content="__SITE_URL__/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DILL'D Classic Dill pickle energy drink can beside pickle slices and fresh dill" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DILL'D Pickle Energy Drink" />
+    <meta name="twitter:description" content="Real fermented dill brine, 180mg caffeine, zero apologies." />
+    <meta name="twitter:image" content="__SITE_URL__/og-image.jpg" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="alternate" type="application/rss+xml" title="The Brine Blog" href="/blog/rss.xml" />
+    <link rel="preload" as="image" href="/brand/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-    <title>DILL'D — Pickle-Powered Energy</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "__SITE_URL__/#organization",
+            "name": "DILL'D",
+            "legalName": "DILL'D Beverages Inc.",
+            "url": "__SITE_URL__/",
+            "logo": "__SITE_URL__/brand/logo.png",
+            "slogan": "May cause extreme dill-ness.",
+            "foundingDate": "2024",
+            "foundingLocation": { "@type": "Place", "name": "Montreal, Quebec, Canada" },
+            "sameAs": ["https://www.tiktok.com/@drinkdilld", "https://www.instagram.com/drinkdilld", "https://www.youtube.com/@drinkdilld"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "__SITE_URL__/#website",
+            "name": "DILL'D",
+            "url": "__SITE_URL__/",
+            "inLanguage": "en-CA",
+            "publisher": { "@id": "__SITE_URL__/#organization" }
+          },
+          {
+            "@type": "ItemList",
+            "name": "DILL'D pickle energy drink flavours",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "Product",
+                  "name": "DILL'D Classic Dill",
+                  "description": "Crisp, salty-sweet cucumber dill punch. Real fermented brine, 180mg caffeine.",
+                  "image": "__SITE_URL__/images/flavours/classic-dill.jpg",
+                  "brand": { "@id": "__SITE_URL__/#organization" },
+                  "category": "Energy drink",
+                  "size": "355 ml",
+                  "offers": { "@type": "Offer", "price": "3.99", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "__SITE_URL__/#shop" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@type": "Product",
+                  "name": "DILL'D Sweet Heat",
+                  "description": "Habanero honey and garlic brine. Spicy sting meets sour pickle crunch.",
+                  "image": "__SITE_URL__/images/flavours/sweet-heat.jpg",
+                  "brand": { "@id": "__SITE_URL__/#organization" },
+                  "category": "Energy drink",
+                  "size": "355 ml",
+                  "offers": { "@type": "Offer", "price": "3.99", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "__SITE_URL__/#shop" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@type": "Product",
+                  "name": "DILL'D Sour Blast",
+                  "description": "Triple-fermented sour pickle surge. Severe jaw-tightening tartness.",
+                  "image": "__SITE_URL__/images/flavours/sour-blast.jpg",
+                  "brand": { "@id": "__SITE_URL__/#organization" },
+                  "category": "Energy drink",
+                  "size": "355 ml",
+                  "offers": { "@type": "Offer", "price": "3.99", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "__SITE_URL__/#shop" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "item": {
+                  "@type": "Product",
+                  "name": "DILL'D Dill Candy",
+                  "description": "Candied pickle syrup with a fizzy rush. Nostalgic carnival sweet bite.",
+                  "image": "__SITE_URL__/images/flavours/dill-candy.jpg",
+                  "brand": { "@id": "__SITE_URL__/#organization" },
+                  "category": "Energy drink",
+                  "size": "355 ml",
+                  "offers": { "@type": "Offer", "price": "3.99", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "__SITE_URL__/#shop" }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Crawlable fallback: React replaces this when the 3D site loads. -->
+      <main class="seo-fallback">
+        <img src="/brand/logo.png" alt="DILL'D logo" width="240" height="165" />
+        <h1>DILL'D Pickle Energy Drink</h1>
+        <p>May cause extreme dill-ness. The internet's favourite pickle energy drink, born in a Montreal food lab: real fermented dill brine, 180mg caffeine per 355ml can and zero excuses.</p>
+        <h2>Pick your poison</h2>
+        <ul>
+          <li><strong>Classic Dill</strong>: crisp, salty-sweet cucumber dill punch. $3.99</li>
+          <li><strong>Sweet Heat</strong>: habanero honey and garlic brine. $3.99</li>
+          <li><strong>Sour Blast</strong>: triple-fermented sour pickle surge. $3.99</li>
+          <li><strong>Dill Candy</strong>: candied pickle syrup with a fizzy rush. $3.99</li>
+        </ul>
+        <h2>The Monthly Mystery Can Drop</h2>
+        <p>A brand-new limited flavour every 30 days. This month: Wasabi Brine Fizz, $4.50, 5,000 cases only.</p>
+        <h2>From the Brine Blog</h2>
+        <ul>
+          <li><a href="/blog/how-much-caffeine-in-dilld/">How much caffeine is in a can of DILL'D?</a></li>
+          <li><a href="/blog/pickle-energy-drink-flavour-guide/">Every DILL'D flavour, ranked from mild to unhinged</a></li>
+          <li><a href="/blog/monthly-mystery-can-drop-explained/">How the Monthly Mystery Can Drop works</a></li>
+          <li><a href="/blog/dilldchallenge-tiktok/">The #DillDChallenge: inside TikTok's sourest dare</a></li>
+          <li><a href="/blog/does-pickle-juice-help-cramps/">Does pickle juice help muscle cramps?</a></li>
+        </ul>
+        <p><a href="/blog/">Read the Brine Blog</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/accessibility/">Accessibility</a></p>
+        <p>180 mg caffeine per 355ml can. Not recommended for children, pregnant or breastfeeding women, or caffeine-sensitive persons.</p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
