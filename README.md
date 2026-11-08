@@ -30,3 +30,10 @@ All text, flavors and colors live in [`src/content.ts`](src/content.ts).
 ## Credits
 
 Inspired by [Sam-Aklan/energy-drink-landing-page](https://github.com/Sam-Aklan/energy-drink-landing-page) (MIT).
+
+## Blog, SEO and docs
+
+- **Brine Blog**: articles live in [`content/posts.mjs`](content/posts.mjs). `npm run pages` turns them into static, crawlable pages under `/blog/`, plus `/privacy/`, `/terms/`, `/accessibility/`, `sitemap.xml`, `robots.txt`, an RSS feed and the web manifest. `npm run dev` and `npm run build` run it automatically.
+- **Domain**: set `SITE_URL` in [`site.config.mjs`](site.config.mjs) before launch. Canonical URLs, Open Graph tags, JSON-LD and the sitemap all read from it.
+- **Brand assets**: the logo, mascot and product photos exported from Google Stitch are in `public/brand/` and `public/images/`.
+- **Docs**: [`docs/DILLD_Brand_Book.pptx`](docs/DILLD_Brand_Book.pptx), the SEO title/meta sheet [`docs/DILLD_SEO_Title_et_Meta.xlsx`](docs/DILLD_SEO_Title_et_Meta.xlsx) and the Stitch design system [`docs/STITCH_DESIGN_SYSTEM.md`](docs/STITCH_DESIGN_SYSTEM.md).
