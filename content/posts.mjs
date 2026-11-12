@@ -241,7 +241,7 @@ export const legalPages = [
     slug: 'terms',
     title: "Terms of Service | DILL'D",
     h1: 'Terms of Service',
-    description: "The terms that apply when you shop DILL'D pickle energy drinks, enter Mystery Can Drops or use dilld.ca.",
+    description: "The terms that apply when you shop DILL'D pickle energy drinks, enter Mystery Can Drops or use this website.",
     body: `
 <p>Last updated: November 2026.</p>
 <h2>Orders</h2>
@@ -260,7 +260,7 @@ export const legalPages = [
     h1: 'Accessibility',
     description: "DILL'D is committed to a website everyone can use. Here's what we support and how to tell us if something doesn't work for you.",
     body: `
-<p>We want dilld.ca to work for everyone, including people using screen readers, keyboard navigation or reduced-motion settings.</p>
+<p>We want this website to work for everyone, including people using screen readers, keyboard navigation or reduced-motion settings.</p>
 <h2>What we do</h2>
 <ul>
   <li>Text alternatives for every product image</li>
