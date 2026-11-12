@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://dilld.ca/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <loc>https://dilld.vercel.app/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://dilld.ca/blog/</loc>
+    <loc>https://dilld.vercel.app/blog/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dilld.ca/blog/how-much-caffeine-in-dilld/</loc>
+    <loc>https://dilld.vercel.app/blog/how-much-caffeine-in-dilld/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <image:image><image:loc>https://dilld.ca/images/hero-can.jpg</image:loc></image:image>
+    <image:image><image:loc>https://dilld.vercel.app/images/hero-can.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://dilld.ca/blog/pickle-energy-drink-flavour-guide/</loc>
+    <loc>https://dilld.vercel.app/blog/pickle-energy-drink-flavour-guide/</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <image:image><image:loc>https://dilld.ca/images/covers/sour-blast.jpg</image:loc></image:image>
+    <image:image><image:loc>https://dilld.vercel.app/images/covers/sour-blast.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://dilld.ca/blog/monthly-mystery-can-drop-explained/</loc>
+    <loc>https://dilld.vercel.app/blog/monthly-mystery-can-drop-explained/</loc>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <image:image><image:loc>https://dilld.ca/images/covers/dill-candy.jpg</image:loc></image:image>
+    <image:image><image:loc>https://dilld.vercel.app/images/covers/dill-candy.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://dilld.ca/blog/dilldchallenge-tiktok/</loc>
+    <loc>https://dilld.vercel.app/blog/dilldchallenge-tiktok/</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <image:image><image:loc>https://dilld.ca/images/tiktok/brineboyz.jpg</image:loc></image:image>
+    <image:image><image:loc>https://dilld.vercel.app/images/tiktok/brineboyz.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://dilld.ca/blog/does-pickle-juice-help-cramps/</loc>
+    <loc>https://dilld.vercel.app/blog/does-pickle-juice-help-cramps/</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <image:image><image:loc>https://dilld.ca/images/classic-dill-photo.jpg</image:loc></image:image>
+    <image:image><image:loc>https://dilld.vercel.app/images/classic-dill-photo.jpg</image:loc></image:image>
   </url>
   <url>
-    <loc>https://dilld.ca/privacy/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <loc>https://dilld.vercel.app/privacy/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://dilld.ca/terms/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <loc>https://dilld.vercel.app/terms/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://dilld.ca/accessibility/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <loc>https://dilld.vercel.app/accessibility/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

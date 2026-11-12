@@ -2,7 +2,7 @@
 // structured data, the sitemap and the static blog pages.
 // Change SITE_URL to the real domain before going live.
 
-export const SITE_URL = 'https://dilld.ca'
+export const SITE_URL = 'https://dilld.vercel.app'
 
 export const site = {
   name: "DILL'D",
